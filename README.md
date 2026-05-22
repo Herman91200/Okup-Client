@@ -36,11 +36,3 @@
 ## 👤 Автор
 
 [![G7KStore](https://img.shields.io/badge/🚀-G7KStore-2ecc71?style=for-the-badge&logo=playerok&logoColor=white)](https://playerok.com/profile/G7KStore/products)
-
-Или нажми на кнопку ниже:
-
-[![Перейти в профиль PlayerOK](https://img.shields.io/badge/🔗-G7KStore_на_PlayerOK-2ecc71?style=for-the-badge)](https://playerok.com/profile/G7KStore/products)
-
----
-
-⭐ Поставь звезду, если полезно!
