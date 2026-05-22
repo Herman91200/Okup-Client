@@ -10,7 +10,6 @@
             font-family: system-ui, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
         }
 
-        /* Базовые переменные */
         :root {
             --bg-body: #eef2f8;
             --bg-app: #ffffff;
@@ -41,7 +40,6 @@
             --shadow-light: 0 20px 35px rgba(0,0,0,0.05);
         }
 
-        /* Тёмная тема */
         body.dark {
             --bg-body: #0f1724;
             --bg-app: #1a2533;
@@ -80,7 +78,7 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            transition: background 0.2s ease, color 0.2s ease;
+            transition: background 0.2s ease;
         }
 
         .app-container {
@@ -90,10 +88,8 @@
             border-radius: 42px;
             box-shadow: var(--shadow-light);
             overflow: hidden;
-            transition: background 0.2s;
         }
 
-        /* Панель с кнопками — поднимаем выше и отделяем от остального */
         .header-actions {
             display: flex;
             justify-content: flex-end;
@@ -104,27 +100,7 @@
             flex-wrap: wrap;
         }
 
-        .icon-btn {
-            background: var(--btn-reset-bg);
-            border: 1px solid var(--btn-reset-border);
-            font-size: 0.9rem;
-            padding: 8px 16px;
-            border-radius: 40px;
-            cursor: pointer;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--btn-reset-color);
-            transition: 0.2s;
-        }
-
-        .icon-btn:hover {
-            opacity: 0.85;
-            transform: scale(0.96);
-        }
-
-        .currency-select {
+        .icon-btn, .currency-select {
             background: var(--btn-reset-bg);
             border: 1px solid var(--btn-reset-border);
             font-size: 0.9rem;
@@ -133,10 +109,8 @@
             cursor: pointer;
             font-weight: 600;
             color: var(--btn-reset-color);
-            appearance: auto;
         }
 
-        /* вкладки */
         .tabs {
             display: flex;
             background: var(--tabs-bg);
@@ -155,7 +129,6 @@
             border-radius: 40px 40px 0 0;
             cursor: pointer;
             color: var(--tab-color);
-            transition: 0.2s;
         }
 
         .tab-btn.active {
@@ -164,16 +137,13 @@
             box-shadow: 0 -2px 0 var(--tab-active);
         }
 
-        /* страницы */
         .page {
             display: none;
             padding: 22px 26px 32px;
             animation: fadeIn 0.2s ease;
         }
 
-        .page.active-page {
-            display: block;
-        }
+        .page.active-page { display: block; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(6px);}
@@ -209,11 +179,6 @@
             transition: 0.2s;
         }
 
-        .sub-brand a:hover {
-            transform: scale(1.02);
-        }
-
-        /* три окна */
         .row-windows {
             display: flex;
             flex-wrap: wrap;
@@ -251,11 +216,6 @@
             color: var(--input-color);
             font-family: monospace;
             outline: none;
-        }
-
-        .window-card input:focus {
-            border-color: var(--tab-active);
-            box-shadow: 0 0 0 2px rgba(255,122,47,0.2);
         }
 
         .result-card {
@@ -316,7 +276,6 @@
             font-weight: 700;
             border-radius: 60px;
             cursor: pointer;
-            transition: 0.1s;
             border: none;
         }
 
@@ -334,11 +293,6 @@
             background: var(--btn-reset-bg);
             border: 1px solid var(--btn-reset-border);
             color: var(--btn-reset-color);
-        }
-
-        .reset-btn:hover {
-            background: #e2eaf2;
-            color: #ff7a2f;
         }
 
         .profit-input-group {
@@ -383,12 +337,6 @@
             cursor: pointer;
             font-size: 0.8rem;
             color: var(--quick-btn-color);
-            transition: 0.1s;
-        }
-
-        .quick-btn:hover {
-            opacity: 0.8;
-            transform: scale(0.96);
         }
 
         .formula-note {
@@ -437,7 +385,6 @@
         <button class="tab-btn" data-page="page3">StarPets 23%</button>
     </div>
 
-    <!-- страница 1: Playerok 26% -->
     <div id="page1" class="page active-page">
         <div class="client-header">Playerok Client</div>
         <div class="sub-brand"><a href="https://playerok.com/profile/G7KStore/products" target="_blank">🚀 G7KStore</a></div>
@@ -461,7 +408,6 @@
         <div class="formula-note">⚡ 26% комиссия + 25₽ за лот. Введи желаемую прибыль → «Рассчитать цену».</div>
     </div>
 
-    <!-- страница 2: Playerok 16% -->
     <div id="page2" class="page">
         <div class="client-header">Playerok Client</div>
         <div class="sub-brand"><a href="https://playerok.com/profile/G7KStore/products" target="_blank">🚀 G7KStore</a></div>
@@ -485,7 +431,6 @@
         <div class="formula-note">⚡ 16% комиссия + 25₽ за лот (донаты/акции).</div>
     </div>
 
-    <!-- страница 3: StarPets 23% -->
     <div id="page3" class="page">
         <div class="client-header">StarPets Client</div>
         <div class="sub-brand"><a href="https://playerok.com/profile/G7KStore/products" target="_blank">🚀 G7KStore</a></div>
@@ -517,7 +462,6 @@
     const currencySymbol = { RUB: "₽", USD: "$", EUR: "€", KZT: "₸", UAH: "₴", CNY: "¥" };
     let currentCurrency = "RUB";
 
-    // DOM страниц
     const p1 = { spend: document.getElementById('p1_spend'), price: document.getElementById('p1_list'), result: document.getElementById('p1_result'), earn: document.getElementById('p1_earn'), target: document.getElementById('p1_target'), curSym: document.getElementById('p1_cur_sym') };
     const p2 = { spend: document.getElementById('p2_spend'), price: document.getElementById('p2_list'), result: document.getElementById('p2_result'), earn: document.getElementById('p2_earn'), target: document.getElementById('p2_target'), curSym: document.getElementById('p2_cur_sym') };
     const p3 = { spend: document.getElementById('p3_spend'), price: document.getElementById('p3_list'), result: document.getElementById('p3_result'), earn: document.getElementById('p3_earn'), target: document.getElementById('p3_target'), curSym: document.getElementById('p3_cur_sym') };
@@ -612,7 +556,6 @@
         return true;
     }
 
-    // события
     for(let key in configs){
         let c = configs[key];
         let handler = () => updatePage(c);
@@ -651,7 +594,6 @@
         };
     });
 
-    // переключение вкладок
     const tabs = document.querySelectorAll('.tab-btn');
     const pages = document.querySelectorAll('.page');
     function switchPage(pageId){
@@ -663,7 +605,6 @@
     }
     tabs.forEach(t => t.onclick = () => switchPage(t.getAttribute('data-page')));
 
-    // смена валюты
     const currencySelect = document.getElementById('globalCurrency');
     function updateAllCurrencies(){
         currentCurrency = currencySelect.value;
@@ -675,7 +616,6 @@
     }
     currencySelect.addEventListener('change', updateAllCurrencies);
 
-    // тёмная тема с сохранением
     const themeBtn = document.getElementById('themeToggleBtn');
     function setTheme(theme){
         if(theme === 'dark'){
