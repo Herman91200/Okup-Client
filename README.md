@@ -29,4 +29,4 @@
 
 ## 👤 Автор
 
-[![G7KStore](https://img.shields.io/badge/🔹-G7KStore-3178c6?style=for-the-badge)](https://playerok.com/profile/G7KStore/products)
+[G7KStore](https://playerok.com/profile/G7KStore/products)
