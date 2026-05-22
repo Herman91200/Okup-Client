@@ -1,6 +1,6 @@
 # 🌱 Калькулятор «Окуп» — Playerok / StarPets
 
-👉 **[ОТКРЫТЬ КАЛЬКУЛЯТОР](https://herman91200.github.io/Okup-Client/)** 👈
+[![Открыть калькулятор](https://img.shields.io/badge/🚀-ОТКРЫТЬ_КАЛЬКУЛЯТОР-2ecc71?style=for-the-badge&logo=google-chrome&logoColor=white)](https://herman91200.github.io/Okup-Client/)
 
 ---
 
@@ -30,7 +30,3 @@
 ## 👤 Автор
 
 [![G7KStore](https://img.shields.io/badge/🚀-G7KStore-2ecc71?style=for-the-badge)](https://playerok.com/profile/G7KStore/products)
-
----
-
-⭐ **Поставьте звезду, если инструмент полезен!**
