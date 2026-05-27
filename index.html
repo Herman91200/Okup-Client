@@ -38,6 +38,7 @@
             --footer-color: #a7bbcf;
             --border-light: #ecf3f9;
             --shadow-light: 0 20px 35px rgba(0,0,0,0.05);
+            --telegram-bg: #0088cc;
         }
 
         body.dark {
@@ -163,7 +164,7 @@
 
         .sub-brand {
             text-align: center;
-            margin: 12px 0 5px 0;
+            margin: 12px 0 15px 0; /* увеличил нижний отступ, чтобы кнопка не пересекалась с окнами */
         }
 
         .sub-brand a {
@@ -177,6 +178,10 @@
             text-decoration: none;
             box-shadow: 0 5px 15px rgba(46,204,113,0.3);
             transition: 0.2s;
+        }
+
+        .sub-brand a:hover {
+            transform: scale(1.02);
         }
 
         .row-windows {
@@ -339,6 +344,22 @@
             color: var(--quick-btn-color);
         }
 
+        .free-note {
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--footer-color);
+            margin: 5px 0 15px 0;
+        }
+
+        .free-note a {
+            color: var(--tab-active);
+            text-decoration: none;
+        }
+
+        .free-note a:hover {
+            text-decoration: underline;
+        }
+
         .formula-note {
             font-size: 0.7rem;
             text-align: center;
@@ -349,11 +370,48 @@
         }
 
         footer {
-            font-size: 0.65rem;
             text-align: center;
             padding: 14px 20px;
             color: var(--footer-color);
             border-top: 1px solid var(--border-light);
+            font-size: 0.8rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+
+        .footer-links a {
+            color: var(--tab-active);
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.2s;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+
+        .telegram-link {
+            background: var(--telegram-bg);
+            color: white !important;
+            padding: 5px 16px;
+            border-radius: 40px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+        }
+
+        .telegram-link:hover {
+            background: #0066a0;
+            text-decoration: none !important;
         }
 
         @media (max-width: 660px) {
@@ -394,6 +452,11 @@
             <div class="window-card result-card"><label>📦 Окно 3 · Итог после вычета</label><div class="result-value" id="p1_result">—</div></div>
         </div>
         <div class="earn-block"><span class="earn-label">💎 ЗАРАБОТАЛ :</span><span class="earn-number" id="p1_earn">—</span></div>
+        
+        <div class="free-note">
+            📢 Калькулятор бесплатный — подписывайся: <a href="https://t.me/okup_calc" target="_blank">@okup_calc</a>
+        </div>
+
         <div class="button-group">
             <div class="profit-input-group"><label>🎯 Окуп на</label><input type="number" id="p1_target" value="100" step="any"><span id="p1_cur_sym">₽</span></div>
             <div class="quick-profit">
@@ -417,6 +480,11 @@
             <div class="window-card result-card"><label>📦 Окно 3 · Итог после вычета</label><div class="result-value" id="p2_result">—</div></div>
         </div>
         <div class="earn-block"><span class="earn-label">💎 ЗАРАБОТАЛ :</span><span class="earn-number" id="p2_earn">—</span></div>
+        
+        <div class="free-note">
+            📢 Калькулятор бесплатный — подписывайся: <a href="https://t.me/okup_calc" target="_blank">@okup_calc</a>
+        </div>
+
         <div class="button-group">
             <div class="profit-input-group"><label>🎯 Окуп на</label><input type="number" id="p2_target" value="100" step="any"><span id="p2_cur_sym">₽</span></div>
             <div class="quick-profit">
@@ -440,6 +508,11 @@
             <div class="window-card result-card"><label>📦 Окно 3 · Итог после вычета</label><div class="result-value" id="p3_result">—</div></div>
         </div>
         <div class="earn-block"><span class="earn-label">💎 ЗАРАБОТАЛ :</span><span class="earn-number" id="p3_earn">—</span></div>
+        
+        <div class="free-note">
+            📢 Калькулятор бесплатный — подписывайся: <a href="https://t.me/okup_calc" target="_blank">@okup_calc</a>
+        </div>
+
         <div class="button-group">
             <div class="profit-input-group"><label>🎯 Окуп на</label><input type="number" id="p3_target" value="100" step="any"><span id="p3_cur_sym">₽</span></div>
             <div class="quick-profit">
@@ -453,7 +526,13 @@
         </div>
         <div class="formula-note">⚡ 23% комиссия + 32₽ (StarPets).</div>
     </div>
-    <footer>🌍 Доступные валюты: RUB, USD, EUR, KZT, UAH, CNY.</footer>
+
+    <footer>
+        <div class="footer-links">
+            <a href="https://t.me/okup_calc" target="_blank" class="telegram-link">📢 Telegram-канал</a>
+            <span style="color: var(--footer-color);">🌍 Доступные валюты: RUB, USD, EUR, KZT, UAH, CNY</span>
+        </div>
+    </footer>
 </div>
 
 <script>
