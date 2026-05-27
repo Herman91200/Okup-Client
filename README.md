@@ -41,4 +41,5 @@
 
 ## 👤 Автор
 
-[G7KStore](https://playerok.com/profile/G7KStore/products)
+- **Playerok:** [G7KStore](https://playerok.com/profile/G7KStore/products)
+- **Telegram:** [@okup_calc](https://t.me/okup_calc)
