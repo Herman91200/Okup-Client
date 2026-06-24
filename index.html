@@ -164,7 +164,7 @@
 
         .sub-brand {
             text-align: center;
-            margin: 12px 0 15px 0; /* увеличил нижний отступ, чтобы кнопка не пересекалась с окнами */
+            margin: 12px 0 15px 0;
         }
 
         .sub-brand a {
@@ -441,8 +441,10 @@
         <button class="tab-btn active" data-page="page1">Playerok 26%</button>
         <button class="tab-btn" data-page="page2">Playerok 16%</button>
         <button class="tab-btn" data-page="page3">StarPets 23%</button>
+        <button class="tab-btn" data-page="page4">FunPay 3%</button>
     </div>
 
+    <!-- страница 1: Playerok 26% -->
     <div id="page1" class="page active-page">
         <div class="client-header">Playerok Client</div>
         <div class="sub-brand"><a href="https://playerok.com/profile/G7KStore/products" target="_blank">🚀 G7KStore</a></div>
@@ -452,11 +454,7 @@
             <div class="window-card result-card"><label>📦 Окно 3 · Итог после вычета</label><div class="result-value" id="p1_result">—</div></div>
         </div>
         <div class="earn-block"><span class="earn-label">💎 ЗАРАБОТАЛ :</span><span class="earn-number" id="p1_earn">—</span></div>
-        
-        <div class="free-note">
-            📢 Калькулятор бесплатный — подписывайся: <a href="https://t.me/okup_calc" target="_blank">@okup_calc</a>
-        </div>
-
+        <div class="free-note">📢 Калькулятор бесплатный — подписывайся: <a href="https://t.me/okup_calc" target="_blank">@okup_calc</a></div>
         <div class="button-group">
             <div class="profit-input-group"><label>🎯 Окуп на</label><input type="number" id="p1_target" value="100" step="any"><span id="p1_cur_sym">₽</span></div>
             <div class="quick-profit">
@@ -471,6 +469,7 @@
         <div class="formula-note">⚡ 26% комиссия + 25₽ за лот. Введи желаемую прибыль → «Рассчитать цену».</div>
     </div>
 
+    <!-- страница 2: Playerok 16% -->
     <div id="page2" class="page">
         <div class="client-header">Playerok Client</div>
         <div class="sub-brand"><a href="https://playerok.com/profile/G7KStore/products" target="_blank">🚀 G7KStore</a></div>
@@ -480,11 +479,7 @@
             <div class="window-card result-card"><label>📦 Окно 3 · Итог после вычета</label><div class="result-value" id="p2_result">—</div></div>
         </div>
         <div class="earn-block"><span class="earn-label">💎 ЗАРАБОТАЛ :</span><span class="earn-number" id="p2_earn">—</span></div>
-        
-        <div class="free-note">
-            📢 Калькулятор бесплатный — подписывайся: <a href="https://t.me/okup_calc" target="_blank">@okup_calc</a>
-        </div>
-
+        <div class="free-note">📢 Калькулятор бесплатный — подписывайся: <a href="https://t.me/okup_calc" target="_blank">@okup_calc</a></div>
         <div class="button-group">
             <div class="profit-input-group"><label>🎯 Окуп на</label><input type="number" id="p2_target" value="100" step="any"><span id="p2_cur_sym">₽</span></div>
             <div class="quick-profit">
@@ -499,6 +494,7 @@
         <div class="formula-note">⚡ 16% комиссия + 25₽ за лот (донаты/акции).</div>
     </div>
 
+    <!-- страница 3: StarPets 23% -->
     <div id="page3" class="page">
         <div class="client-header">StarPets Client</div>
         <div class="sub-brand"><a href="https://playerok.com/profile/G7KStore/products" target="_blank">🚀 G7KStore</a></div>
@@ -508,11 +504,7 @@
             <div class="window-card result-card"><label>📦 Окно 3 · Итог после вычета</label><div class="result-value" id="p3_result">—</div></div>
         </div>
         <div class="earn-block"><span class="earn-label">💎 ЗАРАБОТАЛ :</span><span class="earn-number" id="p3_earn">—</span></div>
-        
-        <div class="free-note">
-            📢 Калькулятор бесплатный — подписывайся: <a href="https://t.me/okup_calc" target="_blank">@okup_calc</a>
-        </div>
-
+        <div class="free-note">📢 Калькулятор бесплатный — подписывайся: <a href="https://t.me/okup_calc" target="_blank">@okup_calc</a></div>
         <div class="button-group">
             <div class="profit-input-group"><label>🎯 Окуп на</label><input type="number" id="p3_target" value="100" step="any"><span id="p3_cur_sym">₽</span></div>
             <div class="quick-profit">
@@ -525,6 +517,31 @@
             <button class="reset-btn" data-reset="page3">⟳ Сбросить</button>
         </div>
         <div class="formula-note">⚡ 23% комиссия + 32₽ (StarPets).</div>
+    </div>
+
+    <!-- страница 4: FunPay 3% (минимум 30₽) -->
+    <div id="page4" class="page">
+        <div class="client-header">FunPay</div>
+        <div class="sub-brand"><a href="https://playerok.com/profile/G7KStore/products" target="_blank">🚀 G7KStore</a></div>
+        <div class="row-windows">
+            <div class="window-card"><label>💰 Окно 1 · Сколько потрачу</label><input type="number" id="p4_spend" value="10000" step="any"></div>
+            <div class="window-card"><label>🏷️ Окно 2 · За сколько выставлю</label><input type="number" id="p4_list" value="11000" step="any"></div>
+            <div class="window-card result-card"><label>📦 Окно 3 · Итог после вычета</label><div class="result-value" id="p4_result">—</div></div>
+        </div>
+        <div class="earn-block"><span class="earn-label">💎 ЗАРАБОТАЛ :</span><span class="earn-number" id="p4_earn">—</span></div>
+        <div class="free-note">📢 Калькулятор бесплатный — подписывайся: <a href="https://t.me/okup_calc" target="_blank">@okup_calc</a></div>
+        <div class="button-group">
+            <div class="profit-input-group"><label>🎯 Окуп на</label><input type="number" id="p4_target" value="100" step="any"><span id="p4_cur_sym">₽</span></div>
+            <div class="quick-profit">
+                <button class="quick-btn" data-page="page4" data-profit="50">+50</button>
+                <button class="quick-btn" data-page="page4" data-profit="100">+100</button>
+                <button class="quick-btn" data-page="page4" data-profit="200">+200</button>
+                <button class="quick-btn" data-page="page4" data-profit="500">+500</button>
+            </div>
+            <button class="profit-btn" data-okup="page4">🌱 Рассчитать цену</button>
+            <button class="reset-btn" data-reset="page4">⟳ Сбросить</button>
+        </div>
+        <div class="formula-note">⚡ Комиссия 3% от суммы вывода, но не менее 30₽. Введи желаемую прибыль → «Рассчитать цену».</div>
     </div>
 
     <footer>
@@ -541,14 +558,17 @@
     const currencySymbol = { RUB: "₽", USD: "$", EUR: "€", KZT: "₸", UAH: "₴", CNY: "¥" };
     let currentCurrency = "RUB";
 
+    // Конфигурация страниц: [spend, price, result, earn, target, curSym]
     const p1 = { spend: document.getElementById('p1_spend'), price: document.getElementById('p1_list'), result: document.getElementById('p1_result'), earn: document.getElementById('p1_earn'), target: document.getElementById('p1_target'), curSym: document.getElementById('p1_cur_sym') };
     const p2 = { spend: document.getElementById('p2_spend'), price: document.getElementById('p2_list'), result: document.getElementById('p2_result'), earn: document.getElementById('p2_earn'), target: document.getElementById('p2_target'), curSym: document.getElementById('p2_cur_sym') };
     const p3 = { spend: document.getElementById('p3_spend'), price: document.getElementById('p3_list'), result: document.getElementById('p3_result'), earn: document.getElementById('p3_earn'), target: document.getElementById('p3_target'), curSym: document.getElementById('p3_cur_sym') };
+    const p4 = { spend: document.getElementById('p4_spend'), price: document.getElementById('p4_list'), result: document.getElementById('p4_result'), earn: document.getElementById('p4_earn'), target: document.getElementById('p4_target'), curSym: document.getElementById('p4_cur_sym') };
 
     const configs = {
         page1: { ...p1, percent: 26, fixed: 25 },
         page2: { ...p2, percent: 16, fixed: 25 },
-        page3: { ...p3, percent: 23, fixed: 32 }
+        page3: { ...p3, percent: 23, fixed: 32 },
+        page4: { ...p4, percent: 3, fixed: 30 }  // FunPay: 3% но не менее 30₽ → используем fixed как минимум
     };
 
     function parseLocal(v){
@@ -593,8 +613,9 @@
             cfg.result.innerText = "ошибка";
             return;
         }
-        let afterPercent = priceRub * (1 - cfg.percent/100);
-        let finalRub = afterPercent - cfg.fixed;
+        // Для FunPay комиссия = max(3% от priceRub, 30₽)
+        let commissionRub = Math.max(priceRub * cfg.percent/100, cfg.fixed);
+        let finalRub = priceRub - commissionRub;
         cfg.result.innerText = formatCurrency(finalRub);
         if(!isNaN(spendRub)){
             cfg.earn.innerText = formatCurrency(finalRub - spendRub);
@@ -618,23 +639,34 @@
         let targetRub = toRUB(targetVal, currentCurrency);
         if(isNaN(spendRub) || isNaN(targetRub)) return false;
         let desiredFinalRub = spendRub + targetRub;
+        // Решаем уравнение: desiredFinalRub = priceRub - max(priceRub*percent/100, fixed)
+        // Для FunPay fixed = 30, percent = 3
+        // Решаем численно: priceRub = (desiredFinalRub + fixed) / (1 - percent/100)  если комиссия >= fixed
+        // иначе priceRub = desiredFinalRub + fixed (если комиссия = fixed)
+        // Проверим оба варианта:
         let multiplier = 1 - cfg.percent/100;
-        if(multiplier <= 0){
-            alert("Ошибка процента");
-            return false;
+        let candidate1 = (desiredFinalRub + cfg.fixed) / multiplier;
+        let comm1 = candidate1 * cfg.percent/100;
+        let commMin = cfg.fixed;
+        if(comm1 >= commMin){
+            // подходит
+            let requiredPriceLocal = fromRUB(candidate1, currentCurrency);
+            requiredPriceLocal = Math.round(requiredPriceLocal * 100) / 100;
+            cfg.price.value = requiredPriceLocal;
+            updatePage(cfg);
+            return true;
+        } else {
+            // комиссия будет минимальной
+            let candidate2 = desiredFinalRub + cfg.fixed;
+            let requiredPriceLocal = fromRUB(candidate2, currentCurrency);
+            requiredPriceLocal = Math.round(requiredPriceLocal * 100) / 100;
+            cfg.price.value = requiredPriceLocal;
+            updatePage(cfg);
+            return true;
         }
-        let requiredPriceRub = (desiredFinalRub + cfg.fixed) / multiplier;
-        if(requiredPriceRub < 0){
-            alert("Невозможно получить такую прибыль");
-            return false;
-        }
-        let requiredPriceLocal = fromRUB(requiredPriceRub, currentCurrency);
-        requiredPriceLocal = Math.round(requiredPriceLocal * 100) / 100;
-        cfg.price.value = requiredPriceLocal;
-        updatePage(cfg);
-        return true;
     }
 
+    // навешиваем обработчики для всех страниц
     for(let key in configs){
         let c = configs[key];
         let handler = () => updatePage(c);
@@ -691,6 +723,7 @@
         p1.curSym.innerText = sym;
         p2.curSym.innerText = sym;
         p3.curSym.innerText = sym;
+        p4.curSym.innerText = sym;
         for(let k in configs) updatePage(configs[k]);
     }
     currencySelect.addEventListener('change', updateAllCurrencies);
@@ -714,6 +747,7 @@
         setTheme(isDark ? 'light' : 'dark');
     };
 
+    // Инициализация всех страниц
     updateAllCurrencies();
 })();
 </script>
