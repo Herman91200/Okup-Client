@@ -39,6 +39,8 @@
             --border-light: #ecf3f9;
             --shadow-light: 0 20px 35px rgba(0,0,0,0.05);
             --telegram-bg: #0088cc;
+            --calc-btn-bg: #e0e8f0;
+            --calc-btn-hover: #c0d0e0;
         }
 
         body.dark {
@@ -69,6 +71,8 @@
             --footer-color: #7e9bb0;
             --border-light: #2a4050;
             --shadow-light: 0 20px 35px rgba(0,0,0,0.2);
+            --calc-btn-bg: #2c4458;
+            --calc-btn-hover: #3e5a78;
         }
 
         body {
@@ -124,12 +128,13 @@
         .tab-btn {
             background: transparent;
             border: none;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            padding: 8px 18px;
+            padding: 6px 14px;
             border-radius: 40px 40px 0 0;
             cursor: pointer;
             color: var(--tab-color);
+            transition: 0.2s;
         }
 
         .tab-btn.active {
@@ -369,6 +374,71 @@
             margin-top: 12px;
         }
 
+        /* Стили для обычного калькулятора */
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .calc-display {
+            grid-column: 1 / -1;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 28px;
+            padding: 16px 20px;
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: right;
+            font-family: monospace;
+            color: var(--input-color);
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            word-break: break-all;
+        }
+
+        .calc-btn {
+            background: var(--calc-btn-bg);
+            border: none;
+            border-radius: 16px;
+            padding: 16px 0;
+            font-size: 1.4rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--input-color);
+            transition: 0.1s;
+        }
+
+        .calc-btn:hover {
+            background: var(--calc-btn-hover);
+        }
+
+        .calc-btn.operator {
+            background: var(--tab-active);
+            color: white;
+        }
+
+        .calc-btn.operator:hover {
+            opacity: 0.8;
+        }
+
+        .calc-btn.equals {
+            background: var(--btn-profit-bg);
+            color: white;
+        }
+
+        .calc-btn.equals:hover {
+            background: var(--btn-profit-hover);
+        }
+
+        .calc-btn.zero {
+            grid-column: span 2;
+        }
+
         footer {
             text-align: center;
             padding: 14px 20px;
@@ -421,6 +491,7 @@
             .quick-profit { justify-content: center; }
             .tabs { justify-content: center; }
             .header-actions { justify-content: center; }
+            .calc-grid { max-width: 100%; }
         }
     </style>
 </head>
@@ -442,6 +513,8 @@
         <button class="tab-btn" data-page="page2">Playerok 16%</button>
         <button class="tab-btn" data-page="page3">StarPets 23%</button>
         <button class="tab-btn" data-page="page4">FunPay 3%</button>
+        <button class="tab-btn" data-page="page5">Скуп</button>
+        <button class="tab-btn" data-page="page6">Калькулятор</button>
     </div>
 
     <!-- страница 1: Playerok 26% -->
@@ -544,6 +617,55 @@
         <div class="formula-note">⚡ Комиссия 3% от суммы вывода, но не менее 30₽. Введи желаемую прибыль → «Рассчитать цену».</div>
     </div>
 
+    <!-- страница 5: Скуп (цена + комиссия) -->
+    <div id="page5" class="page">
+        <div class="client-header">Скуп</div>
+        <div class="sub-brand"><a href="https://playerok.com/profile/G7KStore/products" target="_blank">🚀 G7KStore</a></div>
+        <div class="row-windows">
+            <div class="window-card"><label>💰 Цена покупки (₽)</label><input type="number" id="p5_price" value="5000" step="any"></div>
+            <div class="window-card"><label>📊 Комиссия при покупке (%)</label><input type="number" id="p5_commission" value="5" step="any"></div>
+            <div class="window-card result-card"><label>📦 Итог с комиссией</label><div class="result-value" id="p5_result">—</div></div>
+        </div>
+        <div class="earn-block" style="background: var(--card-bg); border: 1px solid var(--card-border);">
+            <span class="earn-label">💸 Сумма комиссии :</span>
+            <span class="earn-number" id="p5_commission_amount">—</span>
+        </div>
+        <div class="button-group">
+            <button class="profit-btn" id="p5_calc">🧮 Рассчитать</button>
+            <button class="reset-btn" data-reset="page5">⟳ Сбросить</button>
+        </div>
+        <div class="formula-note">⚡ Итог = Цена + (Цена × Комиссия / 100). Полезно, если при покупке есть комиссия.</div>
+    </div>
+
+    <!-- страница 6: Обычный калькулятор -->
+    <div id="page6" class="page">
+        <div class="client-header">Калькулятор</div>
+        <div class="sub-brand"><a href="https://playerok.com/profile/G7KStore/products" target="_blank">🚀 G7KStore</a></div>
+        <div class="calc-grid">
+            <div class="calc-display" id="calcDisplay">0</div>
+            <button class="calc-btn" data-value="C">C</button>
+            <button class="calc-btn" data-value="±">±</button>
+            <button class="calc-btn" data-value="%">%</button>
+            <button class="calc-btn operator" data-value="/">÷</button>
+            <button class="calc-btn" data-value="7">7</button>
+            <button class="calc-btn" data-value="8">8</button>
+            <button class="calc-btn" data-value="9">9</button>
+            <button class="calc-btn operator" data-value="*">×</button>
+            <button class="calc-btn" data-value="4">4</button>
+            <button class="calc-btn" data-value="5">5</button>
+            <button class="calc-btn" data-value="6">6</button>
+            <button class="calc-btn operator" data-value="-">−</button>
+            <button class="calc-btn" data-value="1">1</button>
+            <button class="calc-btn" data-value="2">2</button>
+            <button class="calc-btn" data-value="3">3</button>
+            <button class="calc-btn operator" data-value="+">+</button>
+            <button class="calc-btn zero" data-value="0">0</button>
+            <button class="calc-btn" data-value=".">.</button>
+            <button class="calc-btn equals" data-value="=">=</button>
+        </div>
+        <div class="formula-note" style="margin-top: 20px;">⚡ Обычный калькулятор для быстрых вычислений.</div>
+    </div>
+
     <footer>
         <div class="footer-links">
             <a href="https://t.me/okup_calc" target="_blank" class="telegram-link">📢 Telegram-канал</a>
@@ -554,11 +676,12 @@
 
 <script>
 (function(){
+    // ----- Валюты и общие переменные -----
     const exchangeRates = { RUB: 1, USD: 0.011, EUR: 0.0102, KZT: 5.2, UAH: 0.45, CNY: 0.079 };
     const currencySymbol = { RUB: "₽", USD: "$", EUR: "€", KZT: "₸", UAH: "₴", CNY: "¥" };
     let currentCurrency = "RUB";
 
-    // Конфигурация страниц: [spend, price, result, earn, target, curSym]
+    // ----- Конфигурация страниц 1-4 -----
     const p1 = { spend: document.getElementById('p1_spend'), price: document.getElementById('p1_list'), result: document.getElementById('p1_result'), earn: document.getElementById('p1_earn'), target: document.getElementById('p1_target'), curSym: document.getElementById('p1_cur_sym') };
     const p2 = { spend: document.getElementById('p2_spend'), price: document.getElementById('p2_list'), result: document.getElementById('p2_result'), earn: document.getElementById('p2_earn'), target: document.getElementById('p2_target'), curSym: document.getElementById('p2_cur_sym') };
     const p3 = { spend: document.getElementById('p3_spend'), price: document.getElementById('p3_list'), result: document.getElementById('p3_result'), earn: document.getElementById('p3_earn'), target: document.getElementById('p3_target'), curSym: document.getElementById('p3_cur_sym') };
@@ -568,9 +691,164 @@
         page1: { ...p1, percent: 26, fixed: 25 },
         page2: { ...p2, percent: 16, fixed: 25 },
         page3: { ...p3, percent: 23, fixed: 32 },
-        page4: { ...p4, percent: 3, fixed: 30 }  // FunPay: 3% но не менее 30₽ → используем fixed как минимум
+        page4: { ...p4, percent: 3, fixed: 30 }
     };
 
+    // ----- Страница 5 (Скуп) -----
+    const p5_price = document.getElementById('p5_price');
+    const p5_commission = document.getElementById('p5_commission');
+    const p5_result = document.getElementById('p5_result');
+    const p5_commission_amount = document.getElementById('p5_commission_amount');
+
+    function updatePage5() {
+        let price = parseLocal(p5_price.value);
+        let comm = parseLocal(p5_commission.value);
+        if (isNaN(price) || isNaN(comm) || comm < 0) {
+            p5_result.innerText = "❌ ошибка";
+            p5_commission_amount.innerText = "—";
+            return;
+        }
+        let commRub = price * (comm / 100);
+        let total = price + commRub;
+        p5_result.innerText = formatCurrency(total);
+        p5_commission_amount.innerText = formatCurrency(commRub);
+    }
+
+    document.getElementById('p5_calc').addEventListener('click', updatePage5);
+    p5_price.addEventListener('input', updatePage5);
+    p5_commission.addEventListener('input', updatePage5);
+
+    // Сброс для страницы 5
+    document.querySelector('[data-reset="page5"]').addEventListener('click', function() {
+        p5_price.value = "0";
+        p5_commission.value = "0";
+        updatePage5();
+    });
+
+    // ----- Страница 6 (Калькулятор) -----
+    let calcDisplay = document.getElementById('calcDisplay');
+    let currentInput = '0';
+    let previousInput = '';
+    let operator = null;
+    let shouldResetDisplay = false;
+
+    function updateDisplay() {
+        calcDisplay.innerText = currentInput;
+    }
+
+    function inputDigit(digit) {
+        if (shouldResetDisplay) {
+            currentInput = digit;
+            shouldResetDisplay = false;
+        } else {
+            if (currentInput === '0' && digit !== '.') {
+                currentInput = digit;
+            } else {
+                currentInput += digit;
+            }
+        }
+        updateDisplay();
+    }
+
+    function inputDecimal() {
+        if (shouldResetDisplay) {
+            currentInput = '0.';
+            shouldResetDisplay = false;
+            updateDisplay();
+            return;
+        }
+        if (!currentInput.includes('.')) {
+            currentInput += '.';
+        }
+        updateDisplay();
+    }
+
+    function handleOperator(op) {
+        let current = parseFloat(currentInput);
+        if (operator && !shouldResetDisplay) {
+            let result = compute(previousInput, current, operator);
+            currentInput = String(result);
+            updateDisplay();
+        }
+        previousInput = currentInput;
+        operator = op;
+        shouldResetDisplay = true;
+    }
+
+    function compute(a, b, op) {
+        a = parseFloat(a);
+        b = parseFloat(b);
+        switch (op) {
+            case '+': return a + b;
+            case '-': return a - b;
+            case '*': return a * b;
+            case '/': return b !== 0 ? a / b : 'Error';
+            default: return b;
+        }
+    }
+
+    function calculateResult() {
+        let current = parseFloat(currentInput);
+        if (operator && !shouldResetDisplay) {
+            let result = compute(previousInput, current, operator);
+            currentInput = String(result);
+            operator = null;
+            previousInput = '';
+            shouldResetDisplay = true;
+            updateDisplay();
+        }
+    }
+
+    function clearAll() {
+        currentInput = '0';
+        previousInput = '';
+        operator = null;
+        shouldResetDisplay = false;
+        updateDisplay();
+    }
+
+    function toggleSign() {
+        if (currentInput !== '0') {
+            if (currentInput.startsWith('-')) {
+                currentInput = currentInput.slice(1);
+            } else {
+                currentInput = '-' + currentInput;
+            }
+            updateDisplay();
+        }
+    }
+
+    function percent() {
+        let num = parseFloat(currentInput);
+        if (!isNaN(num)) {
+            currentInput = String(num / 100);
+            updateDisplay();
+        }
+    }
+
+    // Обработчики для калькулятора
+    document.querySelectorAll('.calc-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            let value = this.dataset.value;
+            if (!isNaN(value) && value !== '') {
+                inputDigit(value);
+            } else if (value === '.') {
+                inputDecimal();
+            } else if (value === 'C') {
+                clearAll();
+            } else if (value === '±') {
+                toggleSign();
+            } else if (value === '%') {
+                percent();
+            } else if (value === '=') {
+                calculateResult();
+            } else if (['+', '-', '*', '/'].includes(value)) {
+                handleOperator(value);
+            }
+        });
+    });
+
+    // ----- Общие функции -----
     function parseLocal(v){
         if(v === undefined || v === null) return NaN;
         let s = String(v).trim().replace(',', '.');
@@ -599,6 +877,7 @@
         return converted.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " " + sym;
     }
 
+    // ----- Обновление страниц 1-4 -----
     function updatePage(cfg){
         let spendLocal = parseLocal(cfg.spend.value);
         let priceLocal = parseLocal(cfg.price.value);
@@ -613,7 +892,6 @@
             cfg.result.innerText = "ошибка";
             return;
         }
-        // Для FunPay комиссия = max(3% от priceRub, 30₽)
         let commissionRub = Math.max(priceRub * cfg.percent/100, cfg.fixed);
         let finalRub = priceRub - commissionRub;
         cfg.result.innerText = formatCurrency(finalRub);
@@ -639,24 +917,16 @@
         let targetRub = toRUB(targetVal, currentCurrency);
         if(isNaN(spendRub) || isNaN(targetRub)) return false;
         let desiredFinalRub = spendRub + targetRub;
-        // Решаем уравнение: desiredFinalRub = priceRub - max(priceRub*percent/100, fixed)
-        // Для FunPay fixed = 30, percent = 3
-        // Решаем численно: priceRub = (desiredFinalRub + fixed) / (1 - percent/100)  если комиссия >= fixed
-        // иначе priceRub = desiredFinalRub + fixed (если комиссия = fixed)
-        // Проверим оба варианта:
         let multiplier = 1 - cfg.percent/100;
         let candidate1 = (desiredFinalRub + cfg.fixed) / multiplier;
         let comm1 = candidate1 * cfg.percent/100;
-        let commMin = cfg.fixed;
-        if(comm1 >= commMin){
-            // подходит
+        if(comm1 >= cfg.fixed){
             let requiredPriceLocal = fromRUB(candidate1, currentCurrency);
             requiredPriceLocal = Math.round(requiredPriceLocal * 100) / 100;
             cfg.price.value = requiredPriceLocal;
             updatePage(cfg);
             return true;
         } else {
-            // комиссия будет минимальной
             let candidate2 = desiredFinalRub + cfg.fixed;
             let requiredPriceLocal = fromRUB(candidate2, currentCurrency);
             requiredPriceLocal = Math.round(requiredPriceLocal * 100) / 100;
@@ -666,7 +936,6 @@
         }
     }
 
-    // навешиваем обработчики для всех страниц
     for(let key in configs){
         let c = configs[key];
         let handler = () => updatePage(c);
@@ -705,6 +974,7 @@
         };
     });
 
+    // ----- Переключение вкладок -----
     const tabs = document.querySelectorAll('.tab-btn');
     const pages = document.querySelectorAll('.page');
     function switchPage(pageId){
@@ -712,10 +982,17 @@
         document.getElementById(pageId).classList.add('active-page');
         tabs.forEach(t => t.classList.remove('active'));
         document.querySelector(`.tab-btn[data-page="${pageId}"]`).classList.add('active');
-        updatePage(configs[pageId]);
+        // Обновляем соответствующие страницы
+        if (pageId === 'page1') updatePage(configs.page1);
+        else if (pageId === 'page2') updatePage(configs.page2);
+        else if (pageId === 'page3') updatePage(configs.page3);
+        else if (pageId === 'page4') updatePage(configs.page4);
+        else if (pageId === 'page5') updatePage5();
+        // страница 6 (калькулятор) не требует обновления
     }
     tabs.forEach(t => t.onclick = () => switchPage(t.getAttribute('data-page')));
 
+    // ----- Смена валюты -----
     const currencySelect = document.getElementById('globalCurrency');
     function updateAllCurrencies(){
         currentCurrency = currencySelect.value;
@@ -725,9 +1002,11 @@
         p3.curSym.innerText = sym;
         p4.curSym.innerText = sym;
         for(let k in configs) updatePage(configs[k]);
+        updatePage5();
     }
     currencySelect.addEventListener('change', updateAllCurrencies);
 
+    // ----- Тёмная тема -----
     const themeBtn = document.getElementById('themeToggleBtn');
     function setTheme(theme){
         if(theme === 'dark'){
@@ -747,8 +1026,9 @@
         setTheme(isDark ? 'light' : 'dark');
     };
 
-    // Инициализация всех страниц
+    // ----- Инициализация -----
     updateAllCurrencies();
+    updatePage5();
 })();
 </script>
 </body>
