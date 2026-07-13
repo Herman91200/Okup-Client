@@ -41,6 +41,9 @@
             --telegram-bg: #0088cc;
             --calc-btn-bg: #e0e8f0;
             --calc-btn-hover: #c0d0e0;
+            --radio-bg: #e0e8f0;
+            --radio-active: #2ecc71;
+            --radio-text: #1f3e53;
         }
 
         body.dark {
@@ -73,6 +76,9 @@
             --shadow-light: 0 20px 35px rgba(0,0,0,0.2);
             --calc-btn-bg: #2c4458;
             --calc-btn-hover: #3e5a78;
+            --radio-bg: #2c4458;
+            --radio-active: #2ecc71;
+            --radio-text: #cce6ff;
         }
 
         body {
@@ -374,6 +380,39 @@
             margin-top: 12px;
         }
 
+        /* Стили для переключателей (радио-кнопки) */
+        .radio-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 10px 0 20px;
+            flex-wrap: wrap;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--radio-bg);
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: var(--radio-text);
+            cursor: pointer;
+            transition: 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .radio-group label.active {
+            border-color: var(--radio-active);
+            background: var(--radio-active);
+            color: white;
+        }
+
+        .radio-group input[type="radio"] {
+            display: none;
+        }
+
         /* Стили для обычного калькулятора */
         .calc-grid {
             display: grid;
@@ -492,6 +531,7 @@
             .tabs { justify-content: center; }
             .header-actions { justify-content: center; }
             .calc-grid { max-width: 100%; }
+            .radio-group label { padding: 6px 12px; font-size: 0.9rem; }
         }
     </style>
 </head>
@@ -617,24 +657,31 @@
         <div class="formula-note">⚡ Комиссия 3% от суммы вывода, но не менее 30₽. Введи желаемую прибыль → «Рассчитать цену».</div>
     </div>
 
-    <!-- страница 5: Скуп (цена + комиссия) -->
+    <!-- страница 5: Скуп (выбор: прибавить или вычесть) -->
     <div id="page5" class="page">
         <div class="client-header">Скуп</div>
         <div class="sub-brand"><a href="https://playerok.com/profile/G7KStore/products" target="_blank">🚀 G7KStore</a></div>
         <div class="row-windows">
-            <div class="window-card"><label>💰 Цена покупки (₽)</label><input type="number" id="p5_price" value="5000" step="any"></div>
-            <div class="window-card"><label>📊 Комиссия при покупке (%)</label><input type="number" id="p5_commission" value="5" step="any"></div>
-            <div class="window-card result-card"><label>📦 Итог с комиссией</label><div class="result-value" id="p5_result">—</div></div>
+            <div class="window-card"><label>💰 Цена (₽)</label><input type="number" id="p5_price" value="5000" step="any"></div>
+            <div class="window-card"><label>📊 Комиссия (%)</label><input type="number" id="p5_commission" value="5" step="any"></div>
+            <div class="window-card result-card"><label>📦 Итог</label><div class="result-value" id="p5_result">—</div></div>
+        </div>
+        <div class="radio-group" id="p5_mode">
+            <label class="active" id="p5_add_label">
+                <input type="radio" name="p5_mode" value="add" checked> ➕ Прибавить
+            </label>
+            <label id="p5_sub_label">
+                <input type="radio" name="p5_mode" value="sub"> ➖ Вычесть
+            </label>
         </div>
         <div class="earn-block" style="background: var(--card-bg); border: 1px solid var(--card-border);">
             <span class="earn-label">💸 Сумма комиссии :</span>
             <span class="earn-number" id="p5_commission_amount">—</span>
         </div>
         <div class="button-group">
-            <button class="profit-btn" id="p5_calc">🧮 Рассчитать</button>
             <button class="reset-btn" data-reset="page5">⟳ Сбросить</button>
         </div>
-        <div class="formula-note">⚡ Итог = Цена + (Цена × Комиссия / 100). Полезно, если при покупке есть комиссия.</div>
+        <div class="formula-note">⚡ Прибавить: итог = цена + комиссия. Вычесть: итог = цена − комиссия (цена уже с комиссией).</div>
     </div>
 
     <!-- страница 6: Обычный калькулятор -->
@@ -694,12 +741,18 @@
         page4: { ...p4, percent: 3, fixed: 30 }
     };
 
-    // ----- Страница 5 (Скуп) -----
+    // ----- Страница 5 (Скуп) с переключателем -----
     const p5_price = document.getElementById('p5_price');
     const p5_commission = document.getElementById('p5_commission');
     const p5_result = document.getElementById('p5_result');
     const p5_commission_amount = document.getElementById('p5_commission_amount');
+    const p5_mode_radios = document.querySelectorAll('input[name="p5_mode"]');
+    const p5_add_label = document.getElementById('p5_add_label');
+    const p5_sub_label = document.getElementById('p5_sub_label');
 
+    let p5_current_mode = 'add'; // 'add' или 'sub'
+
+    // Функция обновления страницы 5
     function updatePage5() {
         let price = parseLocal(p5_price.value);
         let comm = parseLocal(p5_commission.value);
@@ -708,13 +761,36 @@
             p5_commission_amount.innerText = "—";
             return;
         }
-        let commRub = price * (comm / 100);
-        let total = price + commRub;
+        let commAmount = price * (comm / 100);
+        let total;
+        if (p5_current_mode === 'add') {
+            total = price + commAmount;
+        } else { // sub
+            total = price - commAmount;
+        }
         p5_result.innerText = formatCurrency(total);
-        p5_commission_amount.innerText = formatCurrency(commRub);
+        p5_commission_amount.innerText = formatCurrency(commAmount);
     }
 
-    document.getElementById('p5_calc').addEventListener('click', updatePage5);
+    // Обработчики для режима
+    p5_mode_radios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            if (this.checked) {
+                p5_current_mode = this.value;
+                // Обновить активный класс у label
+                p5_add_label.classList.remove('active');
+                p5_sub_label.classList.remove('active');
+                if (p5_current_mode === 'add') {
+                    p5_add_label.classList.add('active');
+                } else {
+                    p5_sub_label.classList.add('active');
+                }
+                updatePage5();
+            }
+        });
+    });
+
+    // Привязка ввода
     p5_price.addEventListener('input', updatePage5);
     p5_commission.addEventListener('input', updatePage5);
 
@@ -826,7 +902,6 @@
         }
     }
 
-    // Обработчики для калькулятора
     document.querySelectorAll('.calc-btn').forEach(btn => {
         btn.addEventListener('click', function(e) {
             let value = this.dataset.value;
