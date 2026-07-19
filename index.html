@@ -380,7 +380,6 @@
             margin-top: 12px;
         }
 
-        /* Стили для переключателей (радио-кнопки) */
         .radio-group {
             display: flex;
             gap: 10px;
@@ -413,7 +412,6 @@
             display: none;
         }
 
-        /* Стили для обычного калькулятора */
         .calc-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -551,7 +549,7 @@
     <div class="tabs">
         <button class="tab-btn active" data-page="page1">Playerok 26%</button>
         <button class="tab-btn" data-page="page2">Playerok 16%</button>
-        <button class="tab-btn" data-page="page3">StarPets 23%</button>
+        <button class="tab-btn" data-page="page3">StarPets</button>
         <button class="tab-btn" data-page="page4">FunPay 3%</button>
         <button class="tab-btn" data-page="page5">Скуп</button>
         <button class="tab-btn" data-page="page6">Калькулятор</button>
@@ -579,7 +577,7 @@
             <button class="profit-btn" data-okup="page1">🌱 Рассчитать цену</button>
             <button class="reset-btn" data-reset="page1">⟳ Сбросить</button>
         </div>
-        <div class="formula-note">⚡ 26% комиссия + 25₽ за лот. Введи желаемую прибыль → «Рассчитать цену».</div>
+        <div class="formula-note">⚡ 26% комиссия + 25₽ за лот.</div>
     </div>
 
     <!-- страница 2: Playerok 16% -->
@@ -607,9 +605,9 @@
         <div class="formula-note">⚡ 16% комиссия + 25₽ за лот (донаты/акции).</div>
     </div>
 
-    <!-- страница 3: StarPets 23% -->
+    <!-- страница 3: StarPets с переключателем -->
     <div id="page3" class="page">
-        <div class="client-header">StarPets Client</div>
+        <div class="client-header">StarPets</div>
         <div class="sub-brand"><a href="https://playerok.com/profile/G7KStore/products" target="_blank">🚀 G7KStore</a></div>
         <div class="row-windows">
             <div class="window-card"><label>💰 Окно 1 · Сколько потрачу</label><input type="number" id="p3_spend" value="10000" step="any"></div>
@@ -618,6 +616,17 @@
         </div>
         <div class="earn-block"><span class="earn-label">💎 ЗАРАБОТАЛ :</span><span class="earn-number" id="p3_earn">—</span></div>
         <div class="free-note">📢 Калькулятор бесплатный — подписывайся: <a href="https://t.me/okup_calc" target="_blank">@okup_calc</a></div>
+
+        <!-- Переключатель режимов StarPets -->
+        <div class="radio-group" id="p3_mode">
+            <label class="active" id="p3_withdraw_label">
+                <input type="radio" name="p3_mode" value="withdraw" checked> 💳 Вывод (23% + 32₽)
+            </label>
+            <label id="p3_balance_label">
+                <input type="radio" name="p3_mode" value="balance"> 💰 На баланс (20%)
+            </label>
+        </div>
+
         <div class="button-group">
             <div class="profit-input-group"><label>🎯 Окуп на</label><input type="number" id="p3_target" value="100" step="any"><span id="p3_cur_sym">₽</span></div>
             <div class="quick-profit">
@@ -629,7 +638,7 @@
             <button class="profit-btn" data-okup="page3">🌱 Рассчитать цену</button>
             <button class="reset-btn" data-reset="page3">⟳ Сбросить</button>
         </div>
-        <div class="formula-note">⚡ 23% комиссия + 32₽ (StarPets).</div>
+        <div class="formula-note">⚡ Вывод: 23% + 32₽. На баланс: 20% (без фикс. вычета).</div>
     </div>
 
     <!-- страница 4: FunPay 3% (минимум 30₽) -->
@@ -654,10 +663,10 @@
             <button class="profit-btn" data-okup="page4">🌱 Рассчитать цену</button>
             <button class="reset-btn" data-reset="page4">⟳ Сбросить</button>
         </div>
-        <div class="formula-note">⚡ Комиссия 3% от суммы вывода, но не менее 30₽. Введи желаемую прибыль → «Рассчитать цену».</div>
+        <div class="formula-note">⚡ Комиссия 3% от суммы вывода, но не менее 30₽.</div>
     </div>
 
-    <!-- страница 5: Скуп (выбор: прибавить или вычесть) -->
+    <!-- страница 5: Скуп -->
     <div id="page5" class="page">
         <div class="client-header">Скуп</div>
         <div class="sub-brand"><a href="https://playerok.com/profile/G7KStore/products" target="_blank">🚀 G7KStore</a></div>
@@ -681,10 +690,10 @@
         <div class="button-group">
             <button class="reset-btn" data-reset="page5">⟳ Сбросить</button>
         </div>
-        <div class="formula-note">⚡ Прибавить: итог = цена + комиссия. Вычесть: итог = цена − комиссия (цена уже с комиссией).</div>
+        <div class="formula-note">⚡ Прибавить: итог = цена + комиссия. Вычесть: итог = цена − комиссия.</div>
     </div>
 
-    <!-- страница 6: Обычный калькулятор -->
+    <!-- страница 6: Калькулятор -->
     <div id="page6" class="page">
         <div class="client-header">Калькулятор</div>
         <div class="sub-brand"><a href="https://playerok.com/profile/G7KStore/products" target="_blank">🚀 G7KStore</a></div>
@@ -728,20 +737,50 @@
     const currencySymbol = { RUB: "₽", USD: "$", EUR: "€", KZT: "₸", UAH: "₴", CNY: "¥" };
     let currentCurrency = "RUB";
 
-    // ----- Конфигурация страниц 1-4 -----
+    // ----- Конфигурация страниц -----
+    // Для страниц 1,2,3 используем обычный вычет (процент + фикс)
+    // Для страницы 4 (FunPay) используем max(процент, фикс)
     const p1 = { spend: document.getElementById('p1_spend'), price: document.getElementById('p1_list'), result: document.getElementById('p1_result'), earn: document.getElementById('p1_earn'), target: document.getElementById('p1_target'), curSym: document.getElementById('p1_cur_sym') };
     const p2 = { spend: document.getElementById('p2_spend'), price: document.getElementById('p2_list'), result: document.getElementById('p2_result'), earn: document.getElementById('p2_earn'), target: document.getElementById('p2_target'), curSym: document.getElementById('p2_cur_sym') };
     const p3 = { spend: document.getElementById('p3_spend'), price: document.getElementById('p3_list'), result: document.getElementById('p3_result'), earn: document.getElementById('p3_earn'), target: document.getElementById('p3_target'), curSym: document.getElementById('p3_cur_sym') };
     const p4 = { spend: document.getElementById('p4_spend'), price: document.getElementById('p4_list'), result: document.getElementById('p4_result'), earn: document.getElementById('p4_earn'), target: document.getElementById('p4_target'), curSym: document.getElementById('p4_cur_sym') };
 
-    const configs = {
+    // Базовые конфиги (будут меняться для page3 в зависимости от режима)
+    let configs = {
         page1: { ...p1, percent: 26, fixed: 25 },
         page2: { ...p2, percent: 16, fixed: 25 },
-        page3: { ...p3, percent: 23, fixed: 32 },
-        page4: { ...p4, percent: 3, fixed: 30 }
+        page3: { ...p3, percent: 23, fixed: 32 }, // по умолчанию "Вывод"
+        page4: { ...p4, percent: 3, fixed: 30 }   // FunPay
     };
 
-    // ----- Страница 5 (Скуп) с переключателем -----
+    // ----- Переключатель для StarPets -----
+    const p3_mode_radios = document.querySelectorAll('input[name="p3_mode"]');
+    const p3_withdraw_label = document.getElementById('p3_withdraw_label');
+    const p3_balance_label = document.getElementById('p3_balance_label');
+
+    function updateStarPetsMode() {
+        let mode = document.querySelector('input[name="p3_mode"]:checked').value;
+        if (mode === 'withdraw') {
+            configs.page3.percent = 23;
+            configs.page3.fixed = 32;
+            p3_withdraw_label.classList.add('active');
+            p3_balance_label.classList.remove('active');
+        } else { // balance
+            configs.page3.percent = 20;
+            configs.page3.fixed = 0;
+            p3_balance_label.classList.add('active');
+            p3_withdraw_label.classList.remove('active');
+        }
+        // пересчитать страницу 3
+        updatePage(configs.page3);
+        // также обновить "Окуп" (если нужно, но там используется текущий конфиг)
+    }
+
+    p3_mode_radios.forEach(radio => {
+        radio.addEventListener('change', updateStarPetsMode);
+    });
+
+    // ----- Страница 5 (Скуп) -----
     const p5_price = document.getElementById('p5_price');
     const p5_commission = document.getElementById('p5_commission');
     const p5_result = document.getElementById('p5_result');
@@ -749,10 +788,8 @@
     const p5_mode_radios = document.querySelectorAll('input[name="p5_mode"]');
     const p5_add_label = document.getElementById('p5_add_label');
     const p5_sub_label = document.getElementById('p5_sub_label');
+    let p5_current_mode = 'add';
 
-    let p5_current_mode = 'add'; // 'add' или 'sub'
-
-    // Функция обновления страницы 5
     function updatePage5() {
         let price = parseLocal(p5_price.value);
         let comm = parseLocal(p5_commission.value);
@@ -765,36 +802,28 @@
         let total;
         if (p5_current_mode === 'add') {
             total = price + commAmount;
-        } else { // sub
+        } else {
             total = price - commAmount;
         }
         p5_result.innerText = formatCurrency(total);
         p5_commission_amount.innerText = formatCurrency(commAmount);
     }
 
-    // Обработчики для режима
     p5_mode_radios.forEach(radio => {
         radio.addEventListener('change', function() {
             if (this.checked) {
                 p5_current_mode = this.value;
-                // Обновить активный класс у label
                 p5_add_label.classList.remove('active');
                 p5_sub_label.classList.remove('active');
-                if (p5_current_mode === 'add') {
-                    p5_add_label.classList.add('active');
-                } else {
-                    p5_sub_label.classList.add('active');
-                }
+                if (p5_current_mode === 'add') p5_add_label.classList.add('active');
+                else p5_sub_label.classList.add('active');
                 updatePage5();
             }
         });
     });
 
-    // Привязка ввода
     p5_price.addEventListener('input', updatePage5);
     p5_commission.addEventListener('input', updatePage5);
-
-    // Сброс для страницы 5
     document.querySelector('[data-reset="page5"]').addEventListener('click', function() {
         p5_price.value = "0";
         p5_commission.value = "0";
@@ -952,7 +981,7 @@
         return converted.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " " + sym;
     }
 
-    // ----- Обновление страниц 1-4 -----
+    // ----- Обновление страниц 1-4 (разные формулы) -----
     function updatePage(cfg){
         let spendLocal = parseLocal(cfg.spend.value);
         let priceLocal = parseLocal(cfg.price.value);
@@ -967,8 +996,15 @@
             cfg.result.innerText = "ошибка";
             return;
         }
-        let commissionRub = Math.max(priceRub * cfg.percent/100, cfg.fixed);
-        let finalRub = priceRub - commissionRub;
+        let finalRub;
+        // Для страницы 4 (FunPay) используем max
+        if (cfg === configs.page4) {
+            let commissionRub = Math.max(priceRub * cfg.percent/100, cfg.fixed);
+            finalRub = priceRub - commissionRub;
+        } else {
+            // Для страниц 1,2,3 вычитаем процент и фиксированную сумму
+            finalRub = priceRub * (1 - cfg.percent/100) - cfg.fixed;
+        }
         cfg.result.innerText = formatCurrency(finalRub);
         if(!isNaN(spendRub)){
             cfg.earn.innerText = formatCurrency(finalRub - spendRub);
@@ -977,6 +1013,7 @@
         }
     }
 
+    // ----- Окуп для всех страниц (универсальный) -----
     function applyOkup(cfg, targetLocal){
         let spendLocal = parseLocal(cfg.spend.value);
         if(isNaN(spendLocal)){
@@ -992,25 +1029,32 @@
         let targetRub = toRUB(targetVal, currentCurrency);
         if(isNaN(spendRub) || isNaN(targetRub)) return false;
         let desiredFinalRub = spendRub + targetRub;
-        let multiplier = 1 - cfg.percent/100;
-        let candidate1 = (desiredFinalRub + cfg.fixed) / multiplier;
-        let comm1 = candidate1 * cfg.percent/100;
-        if(comm1 >= cfg.fixed){
-            let requiredPriceLocal = fromRUB(candidate1, currentCurrency);
-            requiredPriceLocal = Math.round(requiredPriceLocal * 100) / 100;
-            cfg.price.value = requiredPriceLocal;
-            updatePage(cfg);
-            return true;
+
+        let requiredPriceLocal;
+        if (cfg === configs.page4) {
+            // FunPay: решаем max(процент, фикс)
+            let multiplier = 1 - cfg.percent/100;
+            let candidate1 = (desiredFinalRub + cfg.fixed) / multiplier;
+            let comm1 = candidate1 * cfg.percent/100;
+            if(comm1 >= cfg.fixed){
+                requiredPriceLocal = fromRUB(candidate1, currentCurrency);
+            } else {
+                let candidate2 = desiredFinalRub + cfg.fixed;
+                requiredPriceLocal = fromRUB(candidate2, currentCurrency);
+            }
         } else {
-            let candidate2 = desiredFinalRub + cfg.fixed;
-            let requiredPriceLocal = fromRUB(candidate2, currentCurrency);
-            requiredPriceLocal = Math.round(requiredPriceLocal * 100) / 100;
-            cfg.price.value = requiredPriceLocal;
-            updatePage(cfg);
-            return true;
+            // Обычный вычет: final = price * (1 - percent/100) - fixed
+            let multiplier = 1 - cfg.percent/100;
+            let requiredPriceRub = (desiredFinalRub + cfg.fixed) / multiplier;
+            requiredPriceLocal = fromRUB(requiredPriceRub, currentCurrency);
         }
+        requiredPriceLocal = Math.round(requiredPriceLocal * 100) / 100;
+        cfg.price.value = requiredPriceLocal;
+        updatePage(cfg);
+        return true;
     }
 
+    // Навешиваем обработчики для страниц 1-4
     for(let key in configs){
         let c = configs[key];
         let handler = () => updatePage(c);
@@ -1063,7 +1107,6 @@
         else if (pageId === 'page3') updatePage(configs.page3);
         else if (pageId === 'page4') updatePage(configs.page4);
         else if (pageId === 'page5') updatePage5();
-        // страница 6 (калькулятор) не требует обновления
     }
     tabs.forEach(t => t.onclick = () => switchPage(t.getAttribute('data-page')));
 
@@ -1102,6 +1145,7 @@
     };
 
     // ----- Инициализация -----
+    updateStarPetsMode(); // установит правильные параметры для page3
     updateAllCurrencies();
     updatePage5();
 })();
